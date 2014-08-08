@@ -1,22 +1,15 @@
 <?php
 
-require_once WWW_ROOT.'classes'.DS.'DatabasePDO.php';
+require_once __DIR__."/DAO.php";
 
-class SkirmDAO
+class SkirmDAO extends DAO
 {
-    public $pdo;
-
-    public function __construct()
-    {
-        $this->pdo = DatabasePDO::getInstance();
-    }
-
     public function create()
     {
 
     }
 
-    public function read($userId)
+    public function getSkirmsByUserId($userId)
     {
         $sql = "SELECT * FROM st_skirms WHERE user_id = :user_id";
         $stmt = $this->pdo->prepare($sql);
@@ -24,7 +17,7 @@ class SkirmDAO
 
         if($stmt->execute())
         {
-            $arrSkirms = $stmt->fetch(PDO::FETCH_ASSOC);
+            $arrSkirms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             if(!empty($arrSkirms))
             {
